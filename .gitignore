@@ -1,0 +1,45 @@
+*.class
+*.log
+
+# sbt specific
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+.cache
+local.properties
+
+# Eclipse project files
+proguard_cache/
+proguard_cache_conf/
+.settings/
+.metadata/
+.project
+.cache
+
+# IntelliJ project files
+.idea/
+.idea_modules
+.target
+
+# Maven arifacts
+target/
+
+#everything else
+desktop.ini
+.dropbox
