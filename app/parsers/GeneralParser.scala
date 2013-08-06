@@ -13,6 +13,8 @@ import java.net.URL
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.xml.NodeSeq
+import org.jsoup.safety.Whitelist
+import org.jsoup.nodes.Entities.EscapeMode
 
 abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long) {
 	def getAllFeedsFuture = future { getAllFeeds }
@@ -64,7 +66,10 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 
 	private def getCleanTextFromTag(entry: Node, tag: String) = {
 		val tagText = getTextFromTag(entry, tag)
-		Jsoup.parse(tagText).text()
+		val html = Jsoup.clean(tagText, Whitelist.basic)
+    val doc = Jsoup.parse(html, "utf-8")
+    doc.outputSettings.escapeMode(EscapeMode.xhtml)
+    doc.body.html
 	}
 
 	private def parseDate(entry: Node) = {
