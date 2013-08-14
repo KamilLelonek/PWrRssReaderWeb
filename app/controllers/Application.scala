@@ -1,12 +1,10 @@
 package controllers
 
-import scala.collection.mutable.ListBuffer
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
 
-import models.Feed
 import parsers.EStudentParser
 import parsers.NaPWrParser
 import parsers.PWrParser

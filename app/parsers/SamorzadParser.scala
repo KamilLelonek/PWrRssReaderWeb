@@ -1,6 +1,5 @@
 package parsers
 
-import scala.xml.Node
 import ChannelIDs._
 
 class SamorzadParser(lastUpdateTime: Long)

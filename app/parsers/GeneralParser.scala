@@ -47,7 +47,7 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 			itemTag.iterator.take(loopCount) foreach {
 				tag =>
 					val feed = parseTag(tag)
-					if (feed.date < lastUpdateTime) break
+					if (feed.date <= lastUpdateTime) break
 					result += feed
 			}
 		}
