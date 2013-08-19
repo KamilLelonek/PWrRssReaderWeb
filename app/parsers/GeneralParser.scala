@@ -24,7 +24,7 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 		parseXML(xml, channelID)
 	}
 
-	protected def getDateFormat: String
+	protected def getDateFormat: String = "EEE, d MMM yyyy HH:mm:ss Z"
 	protected def getImage(entry: Node): String = findImageTag(getTextFromTag(entry, "description"))
 	protected def getTextFromTag(entry: Node, tag: String) = entry \ tag text
 
