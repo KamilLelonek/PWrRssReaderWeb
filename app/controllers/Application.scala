@@ -4,7 +4,6 @@ import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
-import parsers.Parsers._
 
 import play.api.libs.json.Json
 import play.api.libs.json.Json.prettyPrint
@@ -22,29 +21,23 @@ object Application extends Controller {
     Ok(prettyPrint(json))
   }
 
-  def feedsFrom(lastUpdateTime: Long) = Action {
-    val jsonObjectFeeds = Map("feeds" -> getFeeds(lastUpdateTime))
-    Ok(toJson(jsonObjectFeeds))
-  }
+  def getAllFeeds(lastUpdateTime: Long) =
+    getFeedsFromChannels(lastUpdateTime, getAllFeedsIDs)
 
-  def getFeeds(lastUpdateTime: Long) = {
-    val futures = List(
-      (new NaPWrParser(lastUpdateTime)).getAllFeedsFuture,
-      (new SamorzadParser(lastUpdateTime)).getAllFeedsFuture,
-      (new EStudentParser(lastUpdateTime)).getAllFeedsFuture,
-      (new PWrParser(lastUpdateTime)).getAllFeedsFuture)
 
-    Await.result(Future.sequence(futures), 1 minute).flatten
-  }
+  private def getAllFeedsIDs =
+    (for (i <- 1 to 28) yield i.toString + "&") mkString
 
   def getFeedsFromChannels(lastUpdateTime: Long, channelsIDs: String) = Action {
     val jsonObjectFeeds = Map("feeds" -> getFeeds(lastUpdateTime, channelsIDs))
     Ok(toJson(jsonObjectFeeds))
   }
 
-  def getFeeds(lastUpdateTime: Long, channelsIDs: String) = {
-    def getParserFuture(id: Int, lastUpdateTime: Long) =
-      Parsers.getParserById(id.toInt, lastUpdateTime).getAllFeedsFuture
+  private def getFeeds(lastUpdateTime: Long, channelsIDs: String) = {
+    def getParserFuture(id: Int, lastUpdateTime: Long) = {
+      val parser = Parsers.getParserById(id.toInt, lastUpdateTime)
+      parser.getAllFeedsFuture
+    }
     implicit def string2int(string: String) = string.toInt
 
     val channelsIdArray = channelsIDs split "\\&"
