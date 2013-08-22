@@ -21,28 +21,52 @@ object Application extends Controller {
     Ok(prettyPrint(json))
   }
 
-  def getAllFeeds(lastUpdateTime: Long) =
-    getFeedsFromChannels(lastUpdateTime, getAllFeedsIDs)
-
-
-  private def getAllFeedsIDs =
-    (for (i <- 1 to 28) yield i.toString + "&") mkString
-
-  def getFeedsFromChannels(lastUpdateTime: Long, channelsIDs: String) = Action {
-    val jsonObjectFeeds = Map("feeds" -> getFeeds(lastUpdateTime, channelsIDs))
+  /**
+   * ONE FEED
+   */
+  def getFeedsForChannel(channelID: Int, lastUpdateTime: Long) = Action {
+    val jsonObjectFeeds = Map("feeds" -> getFeeds(channelID, lastUpdateTime))
     Ok(toJson(jsonObjectFeeds))
   }
 
-  private def getFeeds(lastUpdateTime: Long, channelsIDs: String) = {
-    def getParserFuture(id: Int, lastUpdateTime: Long) = {
-      val parser = Parsers.getParserById(id.toInt, lastUpdateTime)
-      parser.getAllFeedsFuture
-    }
-    implicit def string2int(string: String) = string.toInt
+  private def getFeeds(channelID: Int, lastUpdateTime: Long) =
+    getParserById(channelID, lastUpdateTime) getAllFeeds
 
-    val channelsIdArray = channelsIDs split "\\&"
-    val futures = channelsIdArray.map(id => getParserFuture(id, lastUpdateTime)).toList
+  private def getParserById(channelID: Int, lastUpdateTime: Long) =
+    Parsers.getParserById(channelID, lastUpdateTime)
 
-    Await.result(Future.sequence(futures), 1 minute).flatten
+  /**
+   * ALL FEEDS
+   */
+  def getAllFeeds(lastUpdateTime: Long) = Action {
+    val jsonObjectFeeds = Map("feeds" -> getFeeds(lastUpdateTime))
+    Ok(toJson(jsonObjectFeeds))
+  }
+
+  private def getFeeds(lastUpdateTime: Long) = {
+    val futures = for (id <- 1 to 28) yield getFutureById(id, lastUpdateTime)
+
+    Await.result(Future.sequence(futures), 3 minutes).flatten
+  }
+
+  private def getFutureById(channelID: Int, lastUpdateTime: Long) =
+    getParserById(channelID, lastUpdateTime) getAllFeedsFuture
+
+
+  /**
+   * FEEDS BY ID AND TIME
+   */
+  def getFeedsByIdAndTime(channelsIDs: String, lastUpdateTimes: String) = Action {
+    val jsonObjectFeeds = Map("feeds" -> getFeeds(channelsIDs, lastUpdateTimes))
+    Ok(toJson(jsonObjectFeeds))
+  }
+
+  def getFeeds(channelsIDs: String, lastUpdateTimes: String) = {
+    val channelsIdArray = channelsIDs split "\\&" toList
+    val channelsUpdateTimesIdArray = lastUpdateTimes split "\\&" toList
+
+    val futures = (channelsIdArray, channelsUpdateTimesIdArray).zipped.map((channelID, updateTime) => getFutureById(channelID.toInt, updateTime.toLong))
+
+    Await.result(Future.sequence(futures), 3 minutes).flatten
   }
 }

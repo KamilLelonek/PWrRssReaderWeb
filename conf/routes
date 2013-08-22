@@ -2,13 +2,20 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET		/								                     controllers.Application.index
-GET     /feeds                                               controllers.Application.feeds
-GET     /getAllFeeds/:lastUpdateTime                         controllers.Application.getAllFeeds(lastUpdateTime: Long)
+# Get empty feed
+GET     /       controllers.Application.index
 
-GET     /feedsFromChannels/:lastUpdateTime/$id<(\d+\&*)+>    controllers.Application.getFeedsFromChannels(lastUpdateTime: Long, id: String)
-# example:  http://localhost:9000/123456/8&9&10
+# Get mock feeds
+GET     /feeds      controllers.Application.feeds
+
+# Get feeds for one channel
+GET     /feedsForChannel/:channelID/:lastUpdateTime       controllers.Application.getFeedsForChannel(channelID: Int, lastUpdateTime: Int)
+
+# Get feeds for all channels
+GET     /allFeeds/:lastUpdateTime       controllers.Application.getAllFeeds(lastUpdateTime: Long)
+
+# Get feeds for particular channels
+GET     /feedsByIdAndTime/$channelsIDs<(\d+\&*)+>/$lastUpdateTimes<(\d+\&*)+>     controllers.Application.getFeedsByIdAndTime(channelsIDs: String, lastUpdateTimes: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
