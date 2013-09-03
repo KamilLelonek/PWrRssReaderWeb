@@ -1,9 +1,14 @@
-*.class
-*.log
+#play builds
+logs/
+project/project/
+project/target/
+target/
+tmp/
+dist/
+.cache
 
 # sbt specific
 dist/*
-target/
 lib_managed/
 src_managed/
 project/boot/
@@ -21,7 +26,6 @@ bin/
 gen/
 
 # Local configuration file (sdk path, etc)
-.cache
 local.properties
 
 # Eclipse project files
@@ -37,9 +41,6 @@ proguard_cache_conf/
 .idea/
 .idea_modules
 .target
-
-# Maven arifacts
-target/
 
 #everything else
 desktop.ini

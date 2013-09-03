@@ -1,0 +1,15 @@
+@(feeds: IndexedSeq[Feed])
+
+@main {
+<ul>
+    @feeds.map { feed =>
+    	<li>
+			<a class="cbp-vm-image" href="#"><img src="@routes.Assets.at("images/favicon.png")"></a>
+			<h3 class="cbp-vm-title">@feed.title</h3>
+			<div class="cbp-vm-price">@feed.readableDate</div>
+			<div class="cbp-vm-details">@feed.readableDescription</div>
+			<a class="cbp-vm-icon cbp-vm-add" href="@feed.link">Show more</a>
+		</li>
+    }
+</ul>
+}
