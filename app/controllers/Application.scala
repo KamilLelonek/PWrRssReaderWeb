@@ -4,21 +4,34 @@ import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
-
 import play.api.libs.json.Json
 import play.api.libs.json.Json.prettyPrint
 import play.api.libs.json.Json.toJson
 import play.api.mvc.{ Action, Controller }
 import parsers.Parsers
+import play.api.libs.concurrent.Promise.timeout
+import play.api.libs.json.JsValue
+import play.api.Routes
 
 object Application extends Controller {
 	def index = Action {
+		Ok(views.html.index())
+	}
+
+	def feedsHtml = Action {
 		val feeds = getFeeds(0)
-		Ok(views.html.index(feeds))
+		Ok(views.html.feeds(feeds))
 	}
 
 	def feeds = Action { implicit request =>
-		Ok(prettyPrint(getFeedsJSON))
+		val futureResult = Future { getFeedsJSON }
+		val timeoutFuture = timeout("Oops", 2 seconds)
+		Async {
+			Future.firstCompletedOf(Seq(futureResult, timeoutFuture)).map {
+				case result: JsValue => Ok(prettyPrint(result))
+				case err: String => InternalServerError(err)
+			}
+		}
 	}
 
 	private def getFeedsJSON = Json.parse("{\"feeds\" : [{\"title\" : \"Title 1\",\"link\" : \"http ://www.link1.com/\",\"description\" : \"Description 1\",\"channel\" : \"1\",\"date\" : \"1234235434\",\"image\" : \"http://icons.iconarchive.com/icons/sirea/happy-tree-friends/256/Giggles-icon.png\"},{\"title\" : \"Title 2\",\"link\" : \"http ://www.link2.com/\",\"description\" : \"Description 2\",\"channel\" : \"1\",\"date\" : \"12354235234\",\"image\" : \"http://icons.iconarchive.com/icons/sirea/happy-tree-friends/256/Cub-icon.png\"},{\"title\" : \"Title 3\",\"link\" : \"http ://www.link3.com/\",\"description\" : \"Description 3\",\"channel\" : \"2\",\"date\" : \"1334235234\",\"image\" : \"http://icons.iconarchive.com/icons/sirea/happy-tree-friends/256/TheMole-icon.png\"},{\"title\" : \"Title 4\",\"link\" : \"http ://www.link4.com/\",\"description\" : \"Description 4\",\"channel\" : \"2\",\"date\" : \"1654235234\",\"image\" : \"http://icons.iconarchive.com/icons/sirea/happy-tree-friends/256/Petunie-icon.png\"},{\"title\" : \"Title 5\",\"link\" : \"http ://www.link5.com/\",\"description\" : \"Description 5\",\"channel\" : \"3\",\"date\" : \"12342357234\",\"image\" : \"http://icons.iconarchive.com/icons/sirea/happy-tree-friends/256/Nutty-icon.png\"},{\"title\" : \"Title 6\",\"link\" : \"http ://www.link6.com/\",\"description\" : \"Description 6\",\"channel\" : \"3\",\"date\" : \"1234435237\",\"image\" : \"http://www.sireasgallery.com/iconset/happytreefriends/Mime_256x256_32.png\"},{\"title\" : \"Title 7\",\"link\" : \"http ://www.link7.com/\",\"description\" : \"Description 7\",\"channel\" : \"4\",\"date\" : \"1236235254\",\"image\" : \"http://www.sireasgallery.com/iconset/happytreefriends/Splendid_256x256_32.png\"}]}")
@@ -69,5 +82,13 @@ object Application extends Controller {
 		val futures = (channelsIdArray, channelsUpdateTimesIdArray).zipped.map((channelID, updateTime) => getFutureById(channelID.toInt, updateTime.toLong))
 
 		Await.result(Future.sequence(futures), 3 minutes).flatten
+	}
+
+	/**
+	  * Making routes available from JavaScript
+	  */
+
+	def javascriptRoutes = Action { implicit request =>
+		Ok(Routes.javascriptRouter("jsRoutes")(routes.javascript.Application.feedsHtml)).as(JAVASCRIPT)
 	}
 }

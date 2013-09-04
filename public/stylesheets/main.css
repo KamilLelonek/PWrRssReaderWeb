@@ -1,0 +1,61 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+*, *:after, *:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+a { text-decoration: none; }
+
+body, html {
+	font-size: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.clearfix:before, .clearfix:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.clearfix {
+	margin: -30px;
+}
+
+body {
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	color: #00aaff;
+}
+
+.main, .container > header {
+	width: 90%;
+	max-width: 69em;
+	margin: 0 auto;
+}
+
+.container > header h1 {
+	margin: 0;
+	padding-left: 150px;
+	line-height: 150px;
+	max-height: 150px;
+	background: url(/assets/images/logo.png) no-repeat;
+	background-size: contain;
+}
+
+.ajax_loader {
+	margin: 0 0 5px 0;
+	height: 20px;
+	background: url(/assets/images/ajax_loader.gif) no-repeat;
+	background-size: contain;
+}
+
+@media screen and (max-width: 30em) {
+	.container > header h1 {
+		background-position: top;
+		padding-left: 0px;
+		padding-top: 50px;
+		text-align: center;
+	}
+}

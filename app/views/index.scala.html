@@ -1,15 +1,48 @@
-@(feeds: IndexedSeq[Feed])
+<!DOCTYPE html>
 
-@main {
-<ul>
-    @feeds.map { feed =>
-    	<li>
-			<a class="cbp-vm-image" href="#"><img src="@routes.Assets.at("images/favicon.png")"></a>
-			<h3 class="cbp-vm-title">@feed.title</h3>
-			<div class="cbp-vm-price">@feed.readableDate</div>
-			<div class="cbp-vm-details">@feed.readableDescription</div>
-			<a class="cbp-vm-icon cbp-vm-add" href="@feed.link">Show more</a>
-		</li>
-    }
-</ul>
-}
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Test</title>
+
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/component.css")">
+
+        <script src="@routes.Application.javascriptRoutes"></script>
+
+        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
+        <script src="@routes.Assets.at("javascripts/jquery.fittext.js")"></script>
+        <script src="@routes.Assets.at("javascripts/scripts.js")"></script>
+        <script src="@routes.Assets.at("javascripts/modernizr.custom.js")"></script>
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    </head>
+    <body>
+        <div class="container">
+            <header class="clearfix">
+                <h1>PWr RSS Reader</h1>
+            </header>
+            <div class="main">
+                <div class="ajax_loader"></div>
+                <div id="cbp-vm" class="cbp-vm-switcher cbp-vm-view-grid">
+                    <div class="cbp-vm-options">
+                        <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid">Grid View</a>
+                        <a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list">List View</a>
+                    </div>
+                    <ul></ul>
+                </div>
+            </div><!-- /main -->
+        </div><!-- /container -->
+
+        <script src="@routes.Assets.at("javascripts/classie.js")"></script>
+        <script src="@routes.Assets.at("javascripts/cbpViewModeSwitch.js")"></script>
+    </body>
+</html>

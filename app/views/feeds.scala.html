@@ -1,0 +1,10 @@
+@(feeds: IndexedSeq[Feed])
+	    @feeds.map { feed =>
+	    	<li>
+				<a class="cbp-vm-image" href="@feed.channelSite"><img src="@feed.channelImage"></a>
+				<h3 class="cbp-vm-title">@feed.title</h3>
+				<div class="cbp-vm-date">@feed.readableDate</div>
+				<div class="cbp-vm-details">@feed.readableDescription</div>
+				<a class="cbp-vm-icon cbp-vm-add" href="@feed.link">Read more</a>
+			</li>
+	    }
