@@ -1,26 +1,37 @@
 package controllers
 
+import java.net.ConnectException
+
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
+
+import parsers.Parsers
+import play.api.Routes
+import play.api.libs.concurrent.Promise.timeout
+import play.api.libs.json.JsValue
 import play.api.libs.json.Json
 import play.api.libs.json.Json.prettyPrint
 import play.api.libs.json.Json.toJson
-import play.api.mvc.{ Action, Controller }
-import parsers.Parsers
-import play.api.libs.concurrent.Promise.timeout
-import play.api.libs.json.JsValue
-import play.api.Routes
+import play.api.mvc.Action
+import play.api.mvc.Controller
 
 object Application extends Controller {
+	private lazy val TIMEOUT = 3 minutes
+
 	def index = Action {
 		Ok(views.html.index())
 	}
 
 	def feedsHtml = Action {
-		val feeds = getFeeds(0)
-		Ok(views.html.feeds(feeds))
+		try {
+			val feeds = getFeeds(0)
+			Ok(views.html.feeds(feeds))
+		}
+		catch {
+			case e: ConnectException => NotFound("PWr Services don't response.")
+		}
 	}
 
 	def feeds = Action { implicit request =>
@@ -61,7 +72,7 @@ object Application extends Controller {
 	private def getFeeds(lastUpdateTime: Long) = {
 		val futures = for (id <- 1 to 28) yield getFutureById(id, lastUpdateTime)
 
-		Await.result(Future.sequence(futures), 3 minutes).flatten
+		Await.result(Future.sequence(futures), TIMEOUT).flatten
 	}
 
 	private def getFutureById(channelID: Int, lastUpdateTime: Long) =
@@ -81,7 +92,7 @@ object Application extends Controller {
 
 		val futures = (channelsIdArray, channelsUpdateTimesIdArray).zipped.map((channelID, updateTime) => getFutureById(channelID.toInt, updateTime.toLong))
 
-		Await.result(Future.sequence(futures), 3 minutes).flatten
+		Await.result(Future.sequence(futures), TIMEOUT).flatten
 	}
 
 	/**

@@ -1,11 +1,3 @@
-/**
- * cbpViewModeSwitch.js v1.0.0 http://www.codrops.com
- * 
- * Licensed under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- * 
- * Copyright 2013, Codrops http://www.codrops.com
- */
 (function() {
 
 	var container = document.getElementById('cbp-vm'), optionSwitch = Array.prototype.slice
@@ -15,12 +7,12 @@
 		optionSwitch.forEach(function(el, i) {
 			el.addEventListener('click', function(ev) {
 				ev.preventDefault();
-				_switch(this);
+				switchView(this);
 			}, false);
 		});
 	}
 
-	function _switch(opt) {
+	function switchView(opt) {
 		// remove other view classes and any any selected option
 		optionSwitch.forEach(function(el) {
 			classie.remove(container, el.getAttribute('data-view'));
