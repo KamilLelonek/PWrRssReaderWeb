@@ -28,7 +28,7 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 		getAllFeeds
 	}
 
-	def getAllFeeds: ListBuffer[Feed] = {
+	def getAllFeeds: ListBuffer[Feed] = if (channelIsEnabled) {
 		try {
 			val xml = getXML(link)
 			parseXML(xml, channelID)
@@ -37,12 +37,20 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 			case e: ConnectException => new ListBuffer[Feed]
 		}
 	}
+	else new ListBuffer[Feed]
 
 	protected def getDateFormat: String = "EEE, d MMM yyyy HH:mm:ss Z"
 
 	protected def getImage(entry: Node): String = findImageTag(getTextFromTag(entry, "description"))
 
-	protected def getTextFromTag(entry: Node, tag: String) = entry \ tag text
+	private def findImageTag(description: String) = {
+		val document = Jsoup.parse(description)
+		document.select("img[src]").attr("src")
+	}
+
+	private def getTextFromTag(entry: Node, tag: String) = entry \ tag text
+
+	private def channelIsEnabled = ChannelIDs.isChannelEnabled(channelID)
 
 	private def getXML(link: String) = {
 		val url = new URL(link)
@@ -104,10 +112,5 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 		catch {
 			case _: Exception => currentTimeInMillis
 		}
-	}
-
-	protected def findImageTag(description: String) = {
-		val document = Jsoup.parse(description)
-		document.select("img[src]").attr("src")
 	}
 }
