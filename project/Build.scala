@@ -11,7 +11,8 @@ object ApplicationBuild extends Build {
     // Add your project dependencies here,
     jdbc,
     anorm,
-	"com.github.play2war.ext" %% "redirect-playlogger" % "1.0.1"
+	"com.github.play2war.ext" %% "redirect-playlogger" % "1.0.1",
+	"com.newrelic.agent.java" % "newrelic-agent" % "2.x.x"
   )
 
 
