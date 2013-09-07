@@ -15,6 +15,8 @@ object Feed {
 
 	private lazy val dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", new Locale("pl", "PL"))
 	private lazy val MAX_LENGTH = 200
+	private lazy val ELLIPSIS = "..."
+	private lazy val UNKNOWN = "?"
 
 	def getImageForChannel(channelID: Long) = channelID match {
 		case ID_NaPWr => "channel_napwr"
@@ -87,14 +89,27 @@ case class Feed(
 		date: Long,
 		image: String) {
 
-	def readableDate = dateFormat.format(new Date(date))
-	def readableDescription = {
-		val text = Jsoup.parse(description).text()
-		if (text.length > MAX_LENGTH) text.substring(0, MAX_LENGTH) + "..."
-		else text
+	def readableTitle = if (isEmpty(title)) UNKNOWN else title
+
+	def readableDate = {
+		val dateString = dateFormat.format(new Date(date))
+		if (isEmpty(dateString)) UNKNOWN else dateString
 	}
+
+	def readableDescription = {
+		val text = Jsoup.parse(description).text().trim
+
+		if (text.length > MAX_LENGTH)
+			text.substring(0, MAX_LENGTH) + ELLIPSIS
+		else if (isEmpty(text)) ELLIPSIS else text
+	}
+
 	def channelImage = "/assets/images/" + getImageForChannel(channel) + ".png"
 	def channelSite = getSiteForChannel(channel)
+
+	private def isEmpty(string: String) =
+		string == null ||
+			string.trim.length < 3
 
 	override def toString =
 		"title: " + title +
@@ -103,5 +118,4 @@ case class Feed(
 			"\nchannel: " + channel +
 			"\ndate: " + date +
 			"\nimage: " + image
-
 }
