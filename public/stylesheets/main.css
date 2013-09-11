@@ -1,4 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+@font-face {
+	font-family: 'menuicons';
+	src:url('../fonts/menuicons/menuicons.eot');
+	src:url('../fonts/menuicons/menuicons.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/menuicons/menuicons.woff') format('woff'),
+		url('../fonts/menuicons/menuicons.ttf') format('truetype'),
+		url('../fonts/menuicons/menuicons.svg#menuicons') format('svg');
+}
 
 *, *:after, *:before {
 	-webkit-box-sizing: border-box;
@@ -18,7 +26,7 @@ body, html {
 
 body {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
-	color: #00aaff;
+	color: #33B5E5;
 }
 
 .main {
@@ -27,8 +35,12 @@ body {
 	margin: 0 auto;
 }
 
+nav h1 {
+	display: none;
+}
+
 .main header h1 {
-	margin: 0;
+    margin: 1.3em 0 -0.5em;
 	padding-left: 150px;
 	line-height: 150px;
 	max-height: 150px;
@@ -49,10 +61,74 @@ body {
 		padding-left: 0px;
 		padding-top: 50px;
 		text-align: center;
+	    margin: 2em auto 0;
 	}
 
 	.ajax_loader {
 		margin: 0 auto 5px;
 		max-width: 15em;
+	}
+}
+
+/* To Navigation Style */
+.codrops-top {
+	color: #fff;
+	font-family: 'Lato', Arial, sans-serif;
+}
+
+.codrops-top {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.6);
+	text-transform: uppercase;
+	width: 100%;
+	font-size: 0.69em;
+	line-height: 2.2;
+}
+
+.codrops-top a {
+	text-decoration: none;
+	padding: 0 1em;
+	letter-spacing: 0.1em;
+	color: #888;
+	display: inline-block;
+}
+
+.codrops-top a:hover {
+	background: rgba(255,255,255,0.95);
+	color: #333;
+}
+
+.codrops-top span.right {
+	float: right;
+}
+
+.codrops-top span.right a {
+	float: left;
+	display: block;
+}
+
+.codrops-icon:before {
+	font-family: 'menuicons';
+	margin: 0 4px;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+.codrops-icon-drop:before {
+	content: "\e000";
+}
+
+.codrops-icon-prev:before {
+	content: "\e001";
+}
+
+@media screen and (max-width: 600px) {
+	.codrops-icon span {
+		display: none;
 	}
 }

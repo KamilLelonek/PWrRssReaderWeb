@@ -1,21 +1,15 @@
-@font-face {
-	font-family: 'fontawesome';
-	src: url('../fonts/fontawesome/fontawesome.eot');
-	src: url('../fonts/fontawesome/fontawesome.eot?#iefix') format('embedded-opentype'), url('../fonts/fontawesome/fontawesome.woff') format('woff'), url('../fonts/fontawesome/fontawesome.ttf') format('truetype'), url('../fonts/fontawesome/fontawesome.svg#fontawesome') format('svg');
-}
-
 /* Main container */
 .cbp-vm-switcher {
 	padding: 10px;
 	margin-bottom: 20px;
-	border: 3px solid #00aaff;
+	border: 3px solid #33B5E5;
 }
 
 /* options/select wrapper with switch anchors */
 .cbp-vm-options {
 	text-align: right;
 	padding-bottom: 10px;
-	border-bottom: 3px solid #00aaff;
+	border-bottom: 3px solid #33B5E5;
 }
 
 .cbp-vm-options a {
@@ -30,7 +24,7 @@
 }
 
 .cbp-vm-options a:hover, .cbp-vm-options a.cbp-vm-selected {
-	color: #00aaff;
+	color: #33B5E5;
 }
 
 .cbp-vm-options a:before {
@@ -74,8 +68,8 @@
 
 .cbp-vm-add {
 	color: #fff;
-	background: #47a3da;
-	padding: 10px 20px;
+	background: #33B5E5;
+	padding: 10px 15px;
 	border-radius: 2px;
 	margin: 20px auto;
 	display: inline-block;
@@ -84,7 +78,7 @@
 
 .cbp-vm-add:hover {
 	color: #fff;
-	background: #02639d;
+	background: #0099CC;
 }
 
 .cbp-vm-add:before {
@@ -93,7 +87,7 @@
 
 /* Common icon styles */
 .cbp-vm-icon:before {
-	font-family: 'fontawesome';
+	font-family: 'menuicons';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -109,17 +103,17 @@
 
 /* List */
 .cbp-vm-list:before {
-	content: "\e00a";
+	content: "\e006";
 }
 
 /* Grid */
 .cbp-vm-grid:before {
-	content: "\e00b";
+	content: "\e005";
 }
 
 /* Button */
 .cbp-vm-add:before {
-	content: "\e00c";
+	content: "\e003";
 }
 
 /* Individual view mode styles */
@@ -214,6 +208,11 @@
 		width: 70%;
 	}
 
+
+	.cbp-vm-view-list .cbp-vm-add {
+		width: 20%;
+	}
+
 	.cbp-vm-view-list .cbp-vm-add {
 		clear: both;
     	display: block;
@@ -279,5 +278,328 @@
 
 	.cbp-vm-view-grid ul li {
 		width: 100%;
+	}
+}
+
+/* GnMenu */
+.gn-menu-main,
+.gn-menu-main ul {
+		margin: 0;
+		padding: 0;
+		background: white;
+		color: #33B5E5;
+		list-style: none;
+		text-transform: none;
+		font-weight: 300;
+		font-family: 'Lato', Arial, sans-serif;
+		line-height: 60px;
+}
+
+.gn-menu-main {
+		border-bottom: 1px solid #c6d0da;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 60px;
+		font-size: 13px;
+		z-index: 1;
+}
+
+.gn-menu-main a {
+		display: block;
+		height: 100%;
+		color: #33B5E5;
+		text-decoration: none;
+		cursor: pointer;
+}
+
+.gn-menu-main li,
+.gn-menu li.gn-search-item {
+	-o-transition: .5s;
+  	-ms-transition: .5s;
+  	-moz-transition: .5s;
+  	-webkit-transition: .5s;
+  	transition: .5s;
+}
+
+.gn-menu-main a:hover,
+.gn-menu-main li:hover,
+.gn-menu li.gn-search-item:hover,
+.gn-menu li.gn-search-item:hover a {
+		color: white;
+}
+
+.gn-menu-main li:hover {
+		background: #33B5E5;
+}
+
+.gn-menu-main > li {
+		display: block;
+		float: left;
+		height: 100%;
+		border-right: 1px solid #c6d0da;
+		text-align: center;
+}
+
+/* icon-only trigger (menu item) */
+
+.gn-menu-main li.gn-trigger {
+		position: relative;
+		width: 60px;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+}
+
+.gn-menu-main > li:last-child {
+		float: right;
+		border-right: none;
+		border-left: 1px solid #c6d0da;
+}
+
+.gn-menu-main > li > a {
+		padding: 0 30px;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-weight: bold;
+}
+
+.gn-menu-main:after {
+		display: table;
+		clear: both;
+		content: "";
+}
+
+.gn-menu-wrapper {
+		position: fixed;
+		top: 60px;
+		bottom: 0;
+		left: 0;
+		overflow: hidden;
+		width: 60px;
+		border-right: 1px solid #C6D0DA;
+		background: white;
+		-webkit-transform: translateX(-60px);
+		-moz-transform: translateX(-60px);
+		transform: translateX(-60px);
+		-webkit-transition: -webkit-transform 0.3s, width 0.3s;
+		-moz-transition: -moz-transform 0.3s, width 0.3s;
+		transition: transform 0.3s, width 0.3s;
+}
+
+.gn-scroller {
+		position: absolute;
+		overflow-y: scroll;
+		width: 370px;
+		height: 100%;
+}
+
+.gn-menu {
+		text-align: left;
+		font-size: 18px;
+}
+
+.gn-menu li:not(:first-child),
+.gn-menu li li {
+		box-shadow: inset 0 1px #c6d0da
+		height: 0;
+		-webkit-transition: height 0.3s;
+		-moz-transition: height 0.3s;
+		transition: height 0.3s;
+}
+
+.gn-menu-hidden {
+		overflow: hidden;
+		height: 0;
+		-webkit-transition: height 0.3s;
+		-moz-transition: height 0.3s;
+		transition: height 0.3s;
+}
+
+.gn-menu-hidden a {
+	color: #003052;
+}
+
+.gn-submenu li a {
+		color: #c1c9d1
+}
+
+input.gn-search {
+		position: relative;
+		z-index: 10;
+		padding-left: 60px;
+		outline: none;
+		border: none;
+		background: transparent;
+		color: #33B5E5;
+		font-weight: 300;
+		font-family: 'Lato', Arial, sans-serif;
+		cursor: pointer;
+}
+
+/* placeholder */
+
+.gn-search::-webkit-input-placeholder {
+		color: #33B5E5
+}
+
+.gn-search:-moz-placeholder {
+		color: #33B5E5
+}
+
+.gn-search::-moz-placeholder {
+		color: #33B5E5
+}
+
+.gn-search:-ms-input-placeholder {
+		color: #33B5E5
+}
+
+/* hide placeholder when active in Chrome */
+
+.gn-search:focus::-webkit-input-placeholder,
+.gn-menu li.gn-search-item:hover .gn-search:focus::-webkit-input-placeholder {
+		color: transparent
+}
+
+input.gn-search:focus {
+		cursor: text
+}
+
+.gn-menu li.gn-search-item:hover input.gn-search {
+		color: white
+}
+
+/* placeholder */
+
+.gn-menu li.gn-search-item:hover .gn-search::-webkit-input-placeholder {
+		color: white
+}
+
+.gn-menu li.gn-search-item:hover .gn-search:-moz-placeholder {
+		color: white
+}
+
+.gn-menu li.gn-search-item:hover .gn-search::-moz-placeholder {
+		color: white
+}
+
+.gn-menu li.gn-search-item:hover .gn-search:-ms-input-placeholder {
+		color: white
+}
+
+.gn-menu-main a.gn-icon-search {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 60px;
+}
+
+.gn-icon::before {
+		display: inline-block;
+		width: 60px;
+		text-align: center;
+		text-transform: none;
+		font-weight: normal;
+		font-style: normal;
+		font-variant: normal;
+		font-family: 'menuicons';
+		line-height: 1;
+		speak: none;
+		-webkit-font-smoothing: antialiased;
+}
+
+.gn-icon-search::before {
+		content: "\e002"
+}
+
+/* MOCK */
+.gn-icon-help::before {
+		content: " "
+}
+
+.gn-icon-help {
+	background: url("../images/thumbs/channel_pwr_w10.png") no-repeat center left;
+    margin-left: 5px;
+}
+
+.gn-icon-cog::before {
+		content: " "
+}
+
+.gn-icon-download::before {
+		content: " "
+}
+
+/* if an icon anchor has a span, hide the span */
+
+.gn-icon span {
+		width: 0;
+		height: 0;
+		display: block;
+		overflow: hidden;
+}
+
+.gn-icon-menu::before {
+		margin-left: -15px;
+		vertical-align: -2px;
+		width: 30px;
+		height: 3px;
+		background: #33B5E5;
+		-webkit-box-shadow: 0 3px white, 0 -6px #33B5E5, 0 -9px white, 0 -12px #33B5E5;
+		box-shadow: 0 3px white, 0 -6px #33B5E5, 0 -9px white, 0 -12px #33B5E5;
+		content: '';
+}
+
+.gn-icon-menu:hover::before,
+.gn-icon-menu.gn-selected:hover::before {
+		background: white;
+		-webkit-box-shadow: 0 3px #33B5E5, 0 -6px white, 0 -9px #33B5E5, 0 -12px white;
+		box-shadow: 0 3px #33B5E5, 0 -6px white, 0 -9px #33B5E5, 0 -12px white;
+}
+
+.gn-icon-menu.gn-selected::before {
+		background: #5993cd;
+		-webkit-box-shadow: 0 3px white, 0 -6px #5993cd, 0 -9px white, 0 -12px #5993cd;
+		box-shadow: 0 3px white, 0 -6px #5993cd, 0 -9px white, 0 -12px #5993cd;
+}
+
+/* styles for opening menu */
+
+.gn-menu-wrapper.gn-open-all,
+.gn-menu-wrapper.gn-open-part {
+		-webkit-transform: translateX(0px);
+		-moz-transform: translateX(0px);
+		transform: translateX(0px);
+}
+
+.gn-menu-wrapper.gn-open-all {
+		width: 340px
+}
+
+.gn-menu-wrapper.gn-open-all li {
+		height: 60px
+}
+
+@media screen and (max-width: 422px) {
+	.gn-menu-wrapper.gn-open-all {
+			-webkit-transform: translateX(0px);
+			-moz-transform: translateX(0px);
+			transform: translateX(0px);
+			width: 100%;
+	}
+
+	.gn-menu-wrapper.gn-open-all .gn-scroller {
+			width: 130%
+	}
+}
+
+@media screen and (max-width: 15em) {
+	.gn-menu-main > li:nth-child(2) {
+		display: none;
 	}
 }

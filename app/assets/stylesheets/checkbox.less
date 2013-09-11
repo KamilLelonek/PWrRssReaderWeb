@@ -1,0 +1,90 @@
+input[type=checkbox] {
+  visibility: hidden;
+}
+
+.gn-menu-main .checkBoxContainer {
+  input, a {
+    display: inline-block;
+  }
+
+  input {
+    position: relative;
+    left: 100px;
+  }
+
+  input[type=checkbox]:checked + label:after {
+    .alpha(100);
+  }
+
+  label {
+    cursor: pointer;
+    position: absolute;
+    width: 20px;
+    right: 50px;
+    height: 20px;
+    margin-top: 20px;
+    border-radius: 50%;
+    .background;
+    .shadow;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d',GradientType=0 );
+
+    &:after {
+      .alpha(0);
+      content: '';
+      position: absolute;
+      width: 9px;
+      height: 6px;
+      background: transparent;
+      top: 7px;
+      left: 6px;
+      border: 3px solid #00aaff;
+      border-top: none;
+      border-right: none;
+      .transform;
+      .transition;
+    }
+
+    &:hover::after {
+      .alpha(30);
+    }
+  }
+}
+
+.shadow(@type: inset, @start_position: 0px 1px 1px, @start_color: rgba(0,0,0,0.5), @end_position: 0px 1px 0px, @end_color: rgba(255,255,255,.4)) {
+  @shadow: @type @start_position @start_color, @end_position @end_color;
+  -webkit-box-shadow:  @shadow;
+  -moz-box-shadow:  @shadow;
+  box-shadow:  @shadow;
+}
+
+.background(@position: top, @start_color: #f6f6f6, @start_opacity: 0%, @end_color: #d6d6d6, @end_opacity: 100%) {
+  @gradient: @position, @start_color @start_opacity, @end_color @end_opacity;
+  background: -webkit-linear-gradient(@gradient);
+  background: -moz-linear-gradient(@gradient);
+  background: -o-linear-gradient(@gradient);
+  background: -ms-linear-gradient(@gradient);
+  background: linear-gradient(@gradient);
+}
+
+.transform(@type: rotate, @degrees: -45) {
+  @transform: ~"@{type}(@{degrees}deg)";
+  -webkit-transform: @transform;
+  -moz-transform: @transform;
+  -o-transform: @transform;
+  -ms-transform: @transform;
+  transform: @transform;
+}
+
+.transition(@type: opacity, @time: 0.2s, @easing: ease-in-out) {
+  -webkit-transition: @arguments;
+  -moz-transition: @arguments;
+  -ms-transition: @arguments;
+  -o-transition: @arguments;
+  transition: @arguments;
+}
+
+.alpha(@opacity) {
+  filter: ~"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{opacity})";
+  filter: ~"alpha(opacity=@{opacity})";
+  opacity: (@opacity / 100);
+}

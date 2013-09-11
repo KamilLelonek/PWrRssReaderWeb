@@ -1,6 +1,7 @@
 package parsers
 
 import java.text.SimpleDateFormat
+import scala.language.postfixOps
 import scala.math._
 import java.util.{ Calendar, Locale }
 import scala.xml.Node

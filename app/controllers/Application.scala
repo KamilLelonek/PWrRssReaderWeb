@@ -1,12 +1,10 @@
 package controllers
 
 import java.net.ConnectException
-
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
-
 import parsers.Parsers
 import play.api.Routes
 import play.api.libs.concurrent.Promise.timeout
@@ -16,12 +14,30 @@ import play.api.libs.json.Json.prettyPrint
 import play.api.libs.json.Json.toJson
 import play.api.mvc.Action
 import play.api.mvc.Controller
+import scala.collection.mutable.ArrayBuffer
+import scala.language.postfixOps
 
 object Application extends Controller {
 	private lazy val TIMEOUT = 3 minutes
 
 	def index = Action {
-		Ok(views.html.index())
+		Ok(views.html.index(channelView))
+	}
+
+	private def channelView = {
+		val channelsNames = ArrayBuffer[(String, String)]()
+
+		channelsNames += (("channel_pwr", "PWr"))
+		channelsNames += (("channel_samorzad", "Samorząd"))
+		channelsNames += (("channel_napwr", "NaPWr"))
+		channelsNames += (("channel_estudent", "eStudent"))
+
+		(1 to 12) foreach { i =>
+			channelsNames += (("channel_ss_w" + i, "Samorząd W" + i))
+			channelsNames += (("channel_pwr_w" + i, "Wydział W" + i))
+		}
+
+		views.html.channel(channelsNames)
 	}
 
 	def feedsHtml = Action {

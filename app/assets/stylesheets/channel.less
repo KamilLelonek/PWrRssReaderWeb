@@ -1,0 +1,34 @@
+@iterations: 12;
+
+.loopingClass (@index) when (@index > 0) {
+  @ss: ~"ss_w@{index}";
+  .channel(@ss);
+
+  @pwr: ~"pwr_w@{index}";
+  .channel(@pwr);
+
+  .loopingClass(@index - 1);
+}
+
+.loopingClass (0) {}
+.loopingClass (@iterations);
+
+.channel(@name) {
+  (~".channel_@{name}") {
+    .background("../images/thumbs/channel_@{name}.png");
+    margin-left: 5px;
+
+    &::before {
+      content: " "
+    }
+  }
+}
+
+.background(@url) {
+    background: url(@url) no-repeat center left;
+}
+
+.channel("pwr");
+.channel("napwr");
+.channel("estudent");
+.channel("samorzad");
