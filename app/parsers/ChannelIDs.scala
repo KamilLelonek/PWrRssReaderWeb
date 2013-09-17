@@ -31,8 +31,7 @@ object ChannelIDs {
 	lazy val ID_SS_W12 = 28
 
 	private lazy val disabledChannels =
-		List[Int](
-			ID_NaPWr)
+		List[Int]()
 
 	def isChannelEnabled(channelID: Int) = !disabledChannels.contains(channelID)
 }

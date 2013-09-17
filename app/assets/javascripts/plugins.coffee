@@ -1,9 +1,9 @@
-$ = jQuery
-$ ->
-	createCookie = (name, value) ->
-	 	document.cookie = name + "=" + value
+(exports ? this).createCookie =
+	(name, value) ->
+ 		document.cookie = name + "=" + value
 
-	getCookie = (name) ->
+(exports ? this).getCookie =
+	(name) ->
 		allCookies = '; ' + document.cookie + ';'
 		index = allCookies.indexOf '; '+ escape(name) + '='
 		if index != -1
@@ -11,6 +11,8 @@ $ ->
 			value = allCookies.slice(index, allCookies.indexOf(';', index))
 			unescape value
 
+$ = jQuery
+$ ->
 	$.fn.saveState = ->
 		element = this
 
