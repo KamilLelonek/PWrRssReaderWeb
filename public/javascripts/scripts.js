@@ -1,13 +1,16 @@
-$(function() {
-	var displayOnlyChecked = function() {
-		$('input:checkbox').each(function(index, element) {
-			var el = $(element);
-			var id = el.prop("id");
-			var isChecked = el.prop("checked");
-			toggleShowingFeeds(id, isChecked);
-		});
-	};
+window.displayOnlyChecked = function() {
+	$('input:checkbox').each(function(index, element) {
+		var el = $(element);
+		var id = el.prop("id");
+		var isChecked = el.prop("checked");
+		toggleShowingFeeds(id, isChecked);
+	});
+};
 
+
+$(function() {
+	displayOnlyChecked();
+	
 	$('header').fitText(3, {
 		minFontSize : '10px',
 		maxFontSize : '20px'
