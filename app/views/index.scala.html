@@ -1,4 +1,4 @@
-@(channels: Html)
+@(channels: Html, feeds: Html)
 
 <!DOCTYPE html>
 
@@ -70,13 +70,16 @@
 				<header>
 					<h1>PWr RSS Reader</h1>
 				</header>
-				<div class="ajax_loader"></div>
+				<div class="ajax_loader">
+				</div>
 				<div id="cbp-vm" class="cbp-vm-switcher cbp-vm-view-grid">
 					<div class="cbp-vm-options">
 						<a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid">Grid View</a>
 						<a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list">List View</a>
 					</div>
-					<ul></ul>
+					<ul>
+						@feeds
+					</ul>
 				</div>
 			</div><!-- /main -->
 		</div><!-- /container -->

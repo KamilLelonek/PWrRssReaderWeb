@@ -1,14 +1,18 @@
 package models
 
-import play.api.libs.json.Json
-import java.util.Date
 import java.text.SimpleDateFormat
-import Feed._
+import java.util.Date
 import java.util.Locale
+import scala.collection.immutable.IndexedSeq
+import scala.language.postfixOps
 import org.jsoup.Jsoup
-import org.jsoup.safety.Whitelist
-import org.jsoup.nodes.Entities.EscapeMode
+import Feed._
 import parsers.ChannelIDs._
+import play.api.libs.json.Json
+import play.api.db._
+import play.api.Play.current
+import anorm._
+import anorm.SqlParser._
 
 object Feed {
 	implicit lazy val hogeFormat = Json.format[Feed]
@@ -79,13 +83,52 @@ object Feed {
 		case ID_PWr_W12 => "channel_pwr_w12"
 		case ID_SS_W12 => "channel_ss_w12"
 	}
+
+	def insertFeedsIntoDB(feeds: IndexedSeq[Feed]) = feeds foreach { feed => insertFeedIntoDB(feed) }
+
+	private def insertFeedIntoDB(feed: Feed) = {
+		DB.withConnection {
+			implicit connection =>
+				SQL(
+					"""
+	          insert into feeds values (
+	            {title}, {link}, {description}, {channel}, {date}, {image}
+	          )
+	        """).on(
+						'title -> feed.title,
+						'link -> feed.link,
+						'description -> feed.description,
+						'channel -> feed.channel,
+						'date -> feed.date,
+						'image -> feed.image).executeUpdate()
+		}
+	}
+
+	def getFeedsFromDB = {
+		DB.withConnection {
+			implicit connection =>
+				SQL("select * from feeds").as(feedORM *)
+		}
+	}
+
+	val feedORM = {
+		get[String]("title") ~
+			get[String]("link") ~
+			get[String]("description") ~
+			get[Long]("channel") ~
+			get[Long]("date") ~
+			get[String]("image") map {
+				case title ~ link ~ description ~ channel ~ date ~ image =>
+					Feed(title, link, description, channel, date, image)
+			}
+	}
 }
 
 case class Feed(
 		title: String,
 		link: String,
 		description: String,
-		channel: Int,
+		channel: Long,
 		date: Long,
 		image: String) {
 

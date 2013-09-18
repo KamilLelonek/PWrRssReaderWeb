@@ -16,12 +16,15 @@ import play.api.mvc.Action
 import play.api.mvc.Controller
 import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
+import models.Feed
 
 object Application extends Controller {
 	private lazy val TIMEOUT = 3 minutes
 
 	def index = Action {
-		Ok(views.html.index(channelView))
+		val feeds = Feed.getFeedsFromDB
+		val feedsHTML = views.html.feeds(feeds.toIndexedSeq)
+		Ok(views.html.index(channelView, feedsHTML))
 	}
 
 	private def channelView = {
@@ -43,6 +46,7 @@ object Application extends Controller {
 	def feedsHtml = Action {
 		try {
 			val feeds = getFeeds(0)
+			Feed.insertFeedsIntoDB(feeds)
 			Ok(views.html.feeds(feeds))
 		}
 		catch {
