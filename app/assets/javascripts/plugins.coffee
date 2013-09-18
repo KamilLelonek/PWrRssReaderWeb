@@ -11,6 +11,14 @@
 			value = allCookies.slice(index, allCookies.indexOf(';', index))
 			unescape value
 
+(exports ? this).toggleShowingFeeds =
+	(id, checked) ->
+		elements = $('.feed_' + id)
+		if checked
+			elements.show()
+		else
+	 		elements.hide()
+
 $ = jQuery
 $ ->
 	$.fn.saveState = ->
@@ -24,7 +32,8 @@ $ ->
 		element.click ->
 			name = element.prop("id");
 			isChecked = element.prop('checked')
+			toggleShowingFeeds(name, isChecked)
 			$(element).parent().parent().toggleClass("gn-menu-hidden")
 			createCookie(name, isChecked)
 
-	return
+return

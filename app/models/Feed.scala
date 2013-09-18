@@ -18,37 +18,6 @@ object Feed {
 	private lazy val ELLIPSIS = "..."
 	private lazy val UNKNOWN = "?"
 
-	def getImageForChannel(channelID: Long) = channelID match {
-		case ID_NaPWr => "channel_napwr"
-		case ID_Samorzad => "channel_samorzad"
-		case ID_eStudent => "channel_estudent"
-		case ID_PWr => "channel_pwr"
-		case ID_PWr_W1 => "channel_pwr_w1"
-		case ID_SS_W1 => "channel_ss_w1"
-		case ID_PWr_W2 => "channel_pwr_w2"
-		case ID_SS_W2 => "channel_ss_w2"
-		case ID_PWr_W3 => "channel_pwr_w3"
-		case ID_SS_W3 => "channel_ss_w3"
-		case ID_PWr_W4 => "channel_pwr_w4"
-		case ID_SS_W4 => "channel_ss_w4"
-		case ID_PWr_W5 => "channel_pwr_w5"
-		case ID_SS_W5 => "channel_ss_w5"
-		case ID_PWr_W6 => "channel_pwr_w6"
-		case ID_SS_W6 => "channel_ss_w6"
-		case ID_PWr_W7 => "channel_pwr_w7"
-		case ID_SS_W7 => "channel_ss_w7"
-		case ID_PWr_W8 => "channel_pwr_w8"
-		case ID_SS_W8 => "channel_ss_w8"
-		case ID_PWr_W9 => "channel_pwr_w9"
-		case ID_SS_W9 => "channel_ss_w9"
-		case ID_PWr_W10 => "channel_pwr_w10"
-		case ID_SS_W10 => "channel_ss_w10"
-		case ID_PWr_W11 => "channel_pwr_w11"
-		case ID_SS_W11 => "channel_ss_w11"
-		case ID_PWr_W12 => "channel_pwr_w12"
-		case ID_SS_W12 => "channel_ss_w12"
-	}
-
 	def getSiteForChannel(channelID: Long) = channelID match {
 		case ID_NaPWr => "http://www.napwr.pl/"
 		case ID_Samorzad => "http://samorzad.pwr.wroc.pl/"
@@ -79,6 +48,37 @@ object Feed {
 		case ID_PWr_W12 => "http://www.wemif.pwr.wroc.pl/"
 		case ID_SS_W12 => "http://wemif.samorzad.pwr.wroc.pl/"
 	}
+
+	def getChannelName(channelID: Long) = channelID match {
+		case ID_NaPWr => "channel_napwr"
+		case ID_Samorzad => "channel_samorzad"
+		case ID_eStudent => "channel_estudent"
+		case ID_PWr => "channel_pwr"
+		case ID_PWr_W1 => "channel_pwr_w1"
+		case ID_SS_W1 => "channel_ss_w1"
+		case ID_PWr_W2 => "channel_pwr_w2"
+		case ID_SS_W2 => "channel_ss_w2"
+		case ID_PWr_W3 => "channel_pwr_w3"
+		case ID_SS_W3 => "channel_ss_w3"
+		case ID_PWr_W4 => "channel_pwr_w4"
+		case ID_SS_W4 => "channel_ss_w4"
+		case ID_PWr_W5 => "channel_pwr_w5"
+		case ID_SS_W5 => "channel_ss_w5"
+		case ID_PWr_W6 => "channel_pwr_w6"
+		case ID_SS_W6 => "channel_ss_w6"
+		case ID_PWr_W7 => "channel_pwr_w7"
+		case ID_SS_W7 => "channel_ss_w7"
+		case ID_PWr_W8 => "channel_pwr_w8"
+		case ID_SS_W8 => "channel_ss_w8"
+		case ID_PWr_W9 => "channel_pwr_w9"
+		case ID_SS_W9 => "channel_ss_w9"
+		case ID_PWr_W10 => "channel_pwr_w10"
+		case ID_SS_W10 => "channel_ss_w10"
+		case ID_PWr_W11 => "channel_pwr_w11"
+		case ID_SS_W11 => "channel_ss_w11"
+		case ID_PWr_W12 => "channel_pwr_w12"
+		case ID_SS_W12 => "channel_ss_w12"
+	}
 }
 
 case class Feed(
@@ -104,8 +104,9 @@ case class Feed(
 		else if (isEmpty(text)) ELLIPSIS else text
 	}
 
-	def channelImage = "/assets/images/" + getImageForChannel(channel) + ".png"
+	def channelImage = "/assets/images/" + getChannelName(channel) + ".png"
 	def channelSite = getSiteForChannel(channel)
+	def channelName = getChannelName(channel)
 
 	private def isEmpty(string: String) =
 		string == null ||

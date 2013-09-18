@@ -55,6 +55,10 @@ nav h1 {
 	background-size: contain;
 }
 
+.hidden {
+	display: none !important;
+}
+
 @media screen and (max-width: 30em) {
 	.main header h1 {
 		background-position: top;

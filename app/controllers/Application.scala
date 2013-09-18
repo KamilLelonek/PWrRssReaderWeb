@@ -27,10 +27,10 @@ object Application extends Controller {
 	private def channelView = {
 		val channelsNames = ArrayBuffer[(String, String)]()
 
-		channelsNames += (("channel_pwr", "PWr"))
-		channelsNames += (("channel_samorzad", "Samorząd"))
 		channelsNames += (("channel_napwr", "NaPWr"))
+		channelsNames += (("channel_samorzad", "Samorząd"))
 		channelsNames += (("channel_estudent", "eStudent"))
+		channelsNames += (("channel_pwr", "PWr"))
 
 		(1 to 12) foreach { i =>
 			channelsNames += (("channel_ss_w" + i, "Samorząd W" + i))
