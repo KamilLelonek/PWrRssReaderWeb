@@ -5,6 +5,7 @@
 # Gets for WebApp
 GET          /                                                                              controllers.Application.index
 GET          /feedsHtml                                                                     controllers.Application.feedsHtml
+GET          /feedsFromDBHTML                                                               controllers.Application.feedsFromDBHTML
 
 # Get mock feeds
 GET          /feeds                                                                         controllers.Application.feeds

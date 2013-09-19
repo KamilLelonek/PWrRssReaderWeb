@@ -22,9 +22,14 @@ object Application extends Controller {
 	private lazy val TIMEOUT = 3 minutes
 
 	def index = Action {
-		val feeds = Feed.getFeedsFromDB
-		val feedsHTML = views.html.feeds(feeds.toIndexedSeq)
-		Ok(views.html.index(channelView, feedsHTML))
+		Ok(views.html.index(channelView))
+	}
+
+	def feedsFromDBHTML = Action { Ok(feedsFromDB) }
+	private def feedsFromDB = {
+		val feeds = Feed.getFeedsFromDB.toIndexedSeq
+		Feed.clearCache
+		views.html.feeds(feeds)
 	}
 
 	private def channelView = {
@@ -120,6 +125,8 @@ object Application extends Controller {
 	  */
 
 	def javascriptRoutes = Action { implicit request =>
-		Ok(Routes.javascriptRouter("jsRoutes")(routes.javascript.Application.feedsHtml)).as(JAVASCRIPT)
+		Ok(Routes.javascriptRouter("jsRoutes")(
+			routes.javascript.Application.feedsHtml,
+			routes.javascript.Application.feedsFromDBHTML)).as(JAVASCRIPT)
 	}
 }

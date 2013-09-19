@@ -86,29 +86,30 @@ object Feed {
 
 	def insertFeedsIntoDB(feeds: IndexedSeq[Feed]) = feeds foreach { feed => insertFeedIntoDB(feed) }
 
-	private def insertFeedIntoDB(feed: Feed) = {
+	private def insertFeedIntoDB(feed: Feed) =
 		DB.withConnection {
 			implicit connection =>
 				SQL(
 					"""
-	          insert into feeds values (
-	            {title}, {link}, {description}, {channel}, {date}, {image}
-	          )
-	        """).on(
+					insert into feeds values
+					( {title}, {link}, {description}, {channel}, {date}, {image} );
+					""").on(
 						'title -> feed.title,
 						'link -> feed.link,
 						'description -> feed.description,
 						'channel -> feed.channel,
 						'date -> feed.date,
-						'image -> feed.image).executeUpdate()
+						'image -> feed.image).execute
 		}
-	}
 
-	def getFeedsFromDB = {
+	def getFeedsFromDB =
 		DB.withConnection {
 			implicit connection =>
 				SQL("select * from feeds").as(feedORM *)
 		}
+
+	def clearCache = DB.withConnection {
+		implicit connection => SQL("delete from feeds").execute
 	}
 
 	val feedORM = {

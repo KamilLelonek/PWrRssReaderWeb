@@ -7,24 +7,37 @@ window.displayOnlyChecked = function() {
 	});
 };
 
+var ajaxSuccess = function(data) {
+	$('#cbp-vm ul').html(data);
+	displayOnlyChecked();
+	$('.ajax_loader').hide();
+};
+
+var ajaxError = function() {
+	$('.ajax_loader').hide();
+};
+
+ajaxCache = {
+		success:  function(data) {
+			$('#cbp-vm ul').html(data);
+			displayOnlyChecked();
+			jsRoutes.controllers.Application.feedsHtml().ajax(ajaxFinal)
+		},
+		error : ajaxError
+}
+
+ajaxFinal = {
+		success: ajaxSuccess,
+		error : ajaxError
+}
 
 $(function() {
-	displayOnlyChecked();
-	
 	$('header').fitText(3, {
 		minFontSize : '10px',
 		maxFontSize : '20px'
 	});
-	jsRoutes.controllers.Application.feedsHtml().ajax({
-		success : function(data) {
-			$('#cbp-vm ul').html(data);
-			displayOnlyChecked();
-			$('.ajax_loader').hide();
-		},
-		error : function() {
-			$('.ajax_loader').hide();
-		}
-	});
+	
+	jsRoutes.controllers.Application.feedsFromDBHTML().ajax(ajaxCache);
 
 	$('.codrops-icon-drop').click(function() {
 		$('body,html').animate({
