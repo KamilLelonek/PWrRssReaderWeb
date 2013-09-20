@@ -394,7 +394,7 @@
 .gn-scroller {
 		position: absolute;
 		overflow-y: scroll;
-		width: 370px;
+		width: 345px;
 		height: 100%;
 }
 
@@ -578,7 +578,7 @@ input.gn-search:focus {
 }
 
 .gn-menu-wrapper.gn-open-all {
-		width: 340px
+		width: 300px
 }
 
 .gn-menu-wrapper.gn-open-all li {
