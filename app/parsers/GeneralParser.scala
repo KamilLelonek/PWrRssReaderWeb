@@ -111,7 +111,7 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 			date.getTime
 		}
 		catch {
-			case _: Exception => currentTimeInMillis
+			case _: Exception => 0L
 		}
 	}
 }
