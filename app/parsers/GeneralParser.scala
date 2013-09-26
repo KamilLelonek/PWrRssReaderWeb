@@ -18,6 +18,7 @@ import org.jsoup.safety.Whitelist
 import org.jsoup.nodes.Entities.EscapeMode
 import GeneralParser._
 import java.net.ConnectException
+import play.Logger._
 
 object GeneralParser {
 	private lazy val calendar = Calendar.getInstance
@@ -35,7 +36,10 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 			parseXML(xml, channelID)
 		}
 		catch {
-			case e: ConnectException => new ListBuffer[Feed]
+			case e: ConnectException => {
+				error("GeneralParser#getAllFeeds", e)
+				new ListBuffer[Feed]
+			}
 		}
 	}
 	else new ListBuffer[Feed]
@@ -111,7 +115,11 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 			date.getTime
 		}
 		catch {
-			case _: Exception => 0L
+			case e: Exception => {
+				error("GeneralParser#tryPaseDate\nWhere dateString: "
+					+ dateString + ", and dateFormat: " + dateFormat, e)
+				0L
+			}
 		}
 	}
 }
