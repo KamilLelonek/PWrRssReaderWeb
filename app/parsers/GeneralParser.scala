@@ -102,24 +102,17 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 	}
 
 	private def parseDate(entry: Node) = {
+		val dateFormat = getDateFormat
 		val dateString = entry \ "pubDate" text
-
-		tryPaseDate(dateString, getDateFormat)
-	}
-
-	private def tryPaseDate(dateString: String, dateFormat: String) = {
 		val dateFormatter = new SimpleDateFormat(dateFormat, Locale.ENGLISH)
 
-		try {
+		if (!dateString.isEmpty) {
 			val date = dateFormatter.parse(dateString)
 			date.getTime
 		}
-		catch {
-			case e: Exception => {
-				error("GeneralParser#tryPaseDate\nWhere dateString: "
-					+ dateString + ", and dateFormat: " + dateFormat, e)
-				0L
-			}
+		else {
+			error("GeneralParser#tryPaseDate\nWhere dateString is empty\nand channelID: " + channelID)
+			0L
 		}
 	}
 }
