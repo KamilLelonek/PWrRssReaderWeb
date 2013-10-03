@@ -59,14 +59,12 @@ object Application extends Controller {
 		}
 	}
 
-	def feeds = Action { implicit request =>
+	def feeds = Action.async {
 		val futureResult = Future { getFeedsJSON }
 		val timeoutFuture = timeout("Oops", 2 seconds)
-		Async {
-			Future.firstCompletedOf(Seq(futureResult, timeoutFuture)).map {
-				case result: JsValue => Ok(prettyPrint(result))
-				case err: String => InternalServerError(err)
-			}
+		Future.firstCompletedOf(Seq(futureResult, timeoutFuture)).map {
+			case result: JsValue => Ok(prettyPrint(result))
+			case err: String => InternalServerError(err)
 		}
 	}
 
@@ -127,6 +125,8 @@ object Application extends Controller {
 	def javascriptRoutes = Action { implicit request =>
 		Ok(Routes.javascriptRouter("jsRoutes")(
 			routes.javascript.Application.feedsHtml,
-			routes.javascript.Application.feedsFromDBHTML)).as(JAVASCRIPT)
+			routes.javascript.Application.feedsFromDBHTML))
+			.withHeaders(VARY -> ACCEPT_ENCODING, CACHE_CONTROL -> "max-age=31536000", ETAG -> "xxx")
+			.as(JAVASCRIPT)
 	}
 }

@@ -21,18 +21,6 @@
 		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
 		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/component.css")">
 
-		<script src="@routes.Application.javascriptRoutes"></script>
-
-		<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
-		<script src="@routes.Assets.at("javascripts/jquery.fittext.js")"></script>
-		<script src="@routes.Assets.at("javascripts/classie.js")"></script>
-		<script src="@routes.Assets.at("javascripts/plugins.js")"></script>
-		<script src="@routes.Assets.at("javascripts/scripts.js")"></script>
-		<script src="@routes.Assets.at("javascripts/modernizr.custom.js")"></script>
-		<script src="@routes.Assets.at("javascripts/checkbox.js")"></script>
-		<script src="@routes.Assets.at("javascripts/filter.list.js")"></script>
-		<script src="@routes.Assets.at("javascripts/scroll.js")"></script>
-
 		<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -83,10 +71,16 @@
 			</div><!-- /main -->
 		</div><!-- /container -->
 
-		<script src="@routes.Assets.at("javascripts/viewModeSwitch.js")"></script>
-		<script src="@routes.Assets.at("javascripts/gnmenu.js")"></script>
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script src="@routes.Assets.at("javascripts/all.min.js")"></script>
+		<script src="@routes.Assets.at("javascripts/plugins.min.js")"></script>
+		<script src="@routes.Assets.at("javascripts/checkbox.min.js")"></script>
+		<script src="@routes.Assets.at("javascripts/filter.list.min.js")"></script>
+		<script src="@routes.Assets.at("javascripts/scroll.min.js")"></script>
 		<script>
 			new gnMenu(document.getElementById('gn-menu'));
 		</script>
+
+		<script src="@routes.Application.javascriptRoutes"></script>
 	</body>
 </html>

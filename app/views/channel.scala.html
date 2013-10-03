@@ -1,11 +1,10 @@
 @(channels: IndexedSeq[(String, String)])
 @channels.map { channel =>
-
-<li>
-	<div class="checkBoxContainer">
-		<a class="gn-icon @channel._1" href="#feed_@channel._1">@channel._2</a>
-		<input type="checkbox" id="@channel._1" />
-		<label for="@channel._1"></label>
-	</div>
-</li>
+	<li>
+		<div class="checkBoxContainer">
+			<a class="gn-icon @channel._1" href="#feed_@channel._1">@channel._2</a>
+			<input type="checkbox" id="@channel._1" />
+			<label for="@channel._1"></label>
+		</div>
+	</li>
 }

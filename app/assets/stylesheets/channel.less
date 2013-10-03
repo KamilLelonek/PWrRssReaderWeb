@@ -14,7 +14,7 @@
 .loopingClass (@iterations);
 
 .channel(@name) {
-  (~".channel_@{name}") {
+  .channel_@{name} {
     .background("../images/thumbs/channel_@{name}.png");
     margin-left: 5px;
 
@@ -24,11 +24,18 @@
   }
 }
 
-.background(@url) {
-    background: url(@url) no-repeat center left;
+.background-size(@size) {
+    -webkit-background-size: @size @size;
+  -moz-background-size: @size @size;
+  background-size: @size @size;
 }
 
-.channel("pwr");
-.channel("napwr");
-.channel("estudent");
-.channel("samorzad");
+.background(@url) {
+    background: url(@url) no-repeat center left;
+    .background-size(50px);
+}
+
+.channel(pwr);
+.channel(napwr);
+.channel(estudent);
+.channel(samorzad);

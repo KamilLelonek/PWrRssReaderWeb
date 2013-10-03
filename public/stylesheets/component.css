@@ -56,6 +56,8 @@
 	display: inline-block;
 	max-width: 100%;
 	border: none;
+	height: 130px;
+	width: 130px;
 }
 
 .cbp-vm-title {

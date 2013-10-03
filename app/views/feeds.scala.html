@@ -1,7 +1,7 @@
 @(feeds: IndexedSeq[Feed])
 	    @feeds.map { feed =>
 	    	<li class="feed_@feed.channelName" name="feed_@feed.channelName">
-				<a class="cbp-vm-image" href="@feed.channelSite"><img src="@feed.channelImage"></a>
+				<a class="cbp-vm-image" href="@feed.channelSite"><img src="@feed.channelImage" width="130px" height="130px" /></a>
 				<h3 class="cbp-vm-title title">@feed.readableTitle</h3>
 				<div class="cbp-vm-date">@feed.readableDate</div>
 				<div class="cbp-vm-details">@feed.readableDescription</div>
