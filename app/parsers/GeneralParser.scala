@@ -22,7 +22,7 @@ import play.Logger._
 
 object GeneralParser {
 	private lazy val calendar = Calendar.getInstance
-	private lazy val currentTimeInMillis = calendar.getTimeInMillis
+	private def currentTimeInMillis = calendar.getTimeInMillis
 }
 
 abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long) {
@@ -112,7 +112,7 @@ abstract class GeneralParser(channelID: Int, link: String, lastUpdateTime: Long)
 		}
 		else {
 			error("GeneralParser#tryPaseDate\nWhere dateString is empty\nand channelID: " + channelID)
-			0L
+			currentTimeInMillis
 		}
 	}
 }
